@@ -6,6 +6,9 @@ buildscript {
         minSdkVersion = 16
         compileSdkVersion = 28
         targetSdkVersion = 28
+        androidXAnnotation = "1.1.0"
+        androidXBrowser = "1.0.0"
+        // Put here other AndroidX dependencies
     }
     repositories {
         google()

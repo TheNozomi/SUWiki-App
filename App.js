@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
 import 'react-native-gesture-handler';
 
@@ -16,7 +8,6 @@ import {
   View,
   Text,
   StatusBar,
-  AsyncStorage,
   ActivityIndicator
 } from 'react-native';
 
@@ -25,10 +16,13 @@ import {
   ThemeProvider
 } from 'react-native-elements';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -37,7 +31,6 @@ import HomeScreen from './screens/HomeScreen';
 import DiscussionsScreen from './screens/DiscussionsScreen';
 import ChatScreen from './screens/ChatScreen';
 import OptionsScreen from './screens/OptionsScreen';
-
 
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
