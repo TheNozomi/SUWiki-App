@@ -18,5 +18,8 @@ jobs:
     - name: "Assemble debug APK"
       uses: msfjarvis/setup-android@1.0
       with:
-        entrypoint: ./gradlew
-        args: assembleDebug
+        gradleTasks: assembleDebug
+    - uses: actions/upload-artifact@v1
+      with:
+        name: debug apk
+        path: android/app/build/outputs/apk/debug/app-armeabi-v7a-debug.apk
