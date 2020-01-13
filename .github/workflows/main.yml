@@ -35,10 +35,10 @@ jobs:
           ${{ runner.os }}-gradlebuildcache-
 
     - name: Download gradle dependencies
-      run: ./gradlew dependencies
+      run: cd android && ./gradlew dependencies
 
     - name: Build app
-      run: ./gradlew :app:assembleDebug
+      run: cd android && ./gradlew :app:assembleDebug
       
     - uses: actions/upload-artifact@v1
       with:
