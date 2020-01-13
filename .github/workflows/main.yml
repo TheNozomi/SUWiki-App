@@ -18,7 +18,7 @@ jobs:
     - uses: bahmutov/npm-install@v1
 
     - name: Generate cache key
-      run: ./checksum.sh checksum.txt
+      run: ./android/checksum.sh checksum.txt
 
     - uses: actions/cache@v1
       with:
