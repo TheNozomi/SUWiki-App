@@ -15,5 +15,8 @@ jobs:
         version: 12.x
     - uses: actions/checkout@v1
     - uses: bahmutov/npm-install@v1
-    - name: Install NPM dependencies
-      run: yarn
+    - name: "Assemble debug APK"
+      uses: msfjarvis/setup-android@1.0
+      with:
+        entrypoint: ./gradlew
+        args: assembleDebug
