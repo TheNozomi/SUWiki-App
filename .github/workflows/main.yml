@@ -20,8 +20,8 @@ jobs:
     - name: Generate cache key
       run: chmod +x ./android/checksum.sh && ./android/checksum.sh checksum.txt
 
-    - name: Create JavaScript bundle
-      run: yarn bundle-android
+    - name: Build JavaScript bundle
+      run: mkdir -p android/app/src/main/assets && yarn bundle-android
 
     - uses: actions/cache@v1
       with:
