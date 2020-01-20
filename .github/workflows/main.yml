@@ -20,6 +20,9 @@ jobs:
     - name: Generate cache key
       run: chmod +x ./android/checksum.sh && ./android/checksum.sh checksum.txt
 
+    - name: Create JavaScript bundle
+      run: yarn bundle-android
+
     - uses: actions/cache@v1
       with:
         path: ~/.gradle/caches/jars-3
