@@ -2,6 +2,7 @@ import React from 'react';
 import 'react-native-gesture-handler';
 
 import {
+  Alert,
   SafeAreaView,
   StyleSheet,
   ScrollView,
@@ -17,13 +18,9 @@ import {
 } from 'react-native-elements';
 
 import AsyncStorage from '@react-native-community/async-storage';
-
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import LoginScreen from './screens/LoginScreen';
@@ -32,18 +29,42 @@ import DiscussionsScreen from './screens/DiscussionsScreen';
 import ChatScreen from './screens/ChatScreen';
 import OptionsScreen from './screens/OptionsScreen';
 
+import FandomAPI from './src/fandom';
+
 class AuthLoadingScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.api = new FandomAPI();
+  }
+
   componentDidMount() {
     this._bootstrapAsync();
   }
-
+  
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
+    const token = await AsyncStorage.getItem('accessToken'),
+      userId = await AsyncStorage.getItem('localUserId');
+    if (!token || !userId) this.props.navigation.navigate('Auth');
 
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    this.api.whoami(token).then((result) => {
+      console.log(result);
+      if (result.userId === userId) {
+        this.props.navigation.navigate('App');
+      } else {
+        Alert.alert('Sesión expirada', 
+         'Tu sesión expiró. Vuelve a iniciar sesión para continuar.');
+        this.props.navigation.navigate('Auth'); 
+      }
+    }).catch((err) => {
+      if (err.response && err.response.status === 401) {
+       Alert.alert('Sesión expirada', 
+        'Tu sesión expiró. Vuelve a iniciar sesión para continuar.');
+       this.props.navigation.navigate('Auth');      
+      } else {
+       Alert.alert('Error de red', err.message);  
+      }
+    });
   };
 
   // Render any loading content that you like here
